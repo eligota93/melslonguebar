@@ -1,0 +1,2516 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mels Longue Bar | Menu Digjitale</title>
+  <meta name="description" content="Menu digjitale premium për Mels Longue Bar." />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+    :root {
+      --bg: #030303;
+      --bg-2: #080808;
+      --panel: rgba(17, 17, 17, 0.74);
+      --panel-strong: rgba(24, 21, 15, 0.88);
+      --gold: #d8b34a;
+      --gold-2: #f4db83;
+      --gold-dim: rgba(216, 179, 74, 0.34);
+      --text: #f5f1e6;
+      --muted: rgba(245, 241, 230, 0.66);
+      --line: rgba(216, 179, 74, 0.22);
+      --shadow: 0 20px 55px rgba(0, 0, 0, 0.7);
+      --radius: 22px;
+      --search-height: 70px;
+      --nav-height: 66px;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: #000;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top, rgba(216, 179, 74, 0.14), transparent 32rem),
+        radial-gradient(circle at bottom, rgba(157, 119, 24, 0.12), transparent 28rem),
+        #000;
+      display: flex;
+      justify-content: center;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.22;
+      background-image:
+        linear-gradient(115deg, transparent 0 35%, rgba(255,255,255,0.04) 35.4%, transparent 36% 100%),
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.08) 0 1px, transparent 1.4px),
+        radial-gradient(circle at 70% 60%, rgba(216,179,74,0.16) 0 1px, transparent 1.7px);
+      background-size: 240px 240px, 34px 34px, 52px 52px;
+      mix-blend-mode: screen;
+    }
+
+    .phone-frame {
+      width: min(100%, 430px);
+      min-height: 100vh;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.035), transparent 15rem),
+        radial-gradient(circle at 50% 0%, rgba(216, 179, 74, 0.11), transparent 24rem),
+        var(--bg);
+      position: relative;
+      overflow-x: hidden;
+      isolation: isolate;
+    }
+
+    @media (min-width: 560px) {
+      body {
+        padding: 24px 0;
+        align-items: flex-start;
+      }
+
+      .phone-frame {
+        min-height: calc(100vh - 48px);
+        border: 1px solid rgba(216, 179, 74, 0.22);
+        border-radius: 34px;
+        overflow: clip;
+        box-shadow:
+          0 0 0 10px rgba(255,255,255,0.025),
+          0 35px 100px rgba(0, 0, 0, 0.82),
+          inset 0 1px 0 rgba(255,255,255,0.07);
+      }
+    }
+
+    .search-shell {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      min-height: var(--search-height);
+      padding: 12px 14px 10px;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.96), rgba(0,0,0,0.86)),
+        rgba(0,0,0,0.92);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(216, 179, 74, 0.16);
+    }
+
+    .search-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 46px;
+      border: 1px solid rgba(216, 179, 74, 0.35);
+      border-radius: 999px;
+      padding: 0 8px 0 16px;
+      background:
+        linear-gradient(145deg, rgba(31, 27, 17, 0.78), rgba(7, 7, 7, 0.82));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.07), 0 0 0 rgba(216, 179, 74, 0);
+      transition: border 220ms ease, box-shadow 220ms ease, transform 220ms ease;
+    }
+
+    .search-wrap:focus-within {
+      border-color: rgba(244, 219, 131, 0.78);
+      box-shadow: 0 0 28px rgba(216, 179, 74, 0.18), inset 0 1px 0 rgba(255,255,255,0.1);
+    }
+
+    .search-mark {
+      width: 15px;
+      height: 15px;
+      flex: 0 0 auto;
+      border: 1.8px solid var(--gold);
+      border-radius: 50%;
+      position: relative;
+      opacity: 0.9;
+    }
+
+    .search-mark::after {
+      content: "";
+      width: 7px;
+      height: 1.8px;
+      background: var(--gold);
+      position: absolute;
+      right: -6px;
+      bottom: -3px;
+      transform: rotate(45deg);
+      border-radius: 4px;
+    }
+
+    #searchInput {
+      flex: 1;
+      width: 100%;
+      height: 46px;
+      border: 0;
+      outline: 0;
+      color: var(--text);
+      background: transparent;
+      font-size: 14px;
+      letter-spacing: 0.01em;
+    }
+
+    #searchInput::placeholder {
+      color: rgba(245, 241, 230, 0.46);
+    }
+
+    #clearSearch {
+      border: 1px solid rgba(216, 179, 74, 0.28);
+      color: var(--gold-2);
+      background: rgba(216, 179, 74, 0.08);
+      border-radius: 999px;
+      padding: 8px 11px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateX(5px);
+      pointer-events: none;
+      transition: opacity 180ms ease, transform 180ms ease, background 180ms ease;
+    }
+
+    #clearSearch.is-visible {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: auto;
+    }
+
+    .hero {
+      padding: 34px 22px 30px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(216, 179, 74, 0.14);
+      background:
+        radial-gradient(circle at 50% 32%, rgba(216, 179, 74, 0.22), transparent 16rem),
+        linear-gradient(180deg, rgba(25, 22, 14, 0.6), rgba(0,0,0,0.2));
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: -40px;
+      opacity: 0.26;
+      pointer-events: none;
+      background:
+        repeating-radial-gradient(circle at 50% 45%, transparent 0 21px, rgba(216,179,74,0.16) 22px 23px, transparent 24px 48px),
+        linear-gradient(135deg, transparent, rgba(255,255,255,0.04), transparent);
+      mask-image: radial-gradient(circle at 50% 50%, black, transparent 70%);
+      animation: breathe 7s ease-in-out infinite;
+    }
+
+    .logo-aura {
+      width: min(72vw, 275px);
+      margin: 0 auto 18px;
+      padding: 8px;
+      border-radius: 28px;
+      position: relative;
+      animation: logoRise 920ms cubic-bezier(.2,.9,.2,1) both;
+    }
+
+    .logo-aura::before {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border-radius: 50%;
+      background: rgba(216, 179, 74, 0.18);
+      filter: blur(34px);
+      z-index: -1;
+    }
+
+    .brand-logo {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: contain;
+      filter: drop-shadow(0 0 23px rgba(216, 179, 74, 0.35));
+    }
+
+    .eyebrow {
+      margin: 0 auto 12px;
+      width: fit-content;
+      color: var(--gold-2);
+      border: 1px solid rgba(216, 179, 74, 0.32);
+      background: rgba(216, 179, 74, 0.07);
+      border-radius: 999px;
+      padding: 8px 13px;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-family: 'Cinzel', Georgia, serif;
+      margin: 0;
+      font-size: clamp(32px, 9.2vw, 46px);
+      line-height: 0.98;
+      letter-spacing: 0.03em;
+      color: var(--text);
+      text-shadow: 0 0 30px rgba(216,179,74,0.26);
+    }
+
+    .subtitle {
+      margin: 12px 0 0;
+      color: var(--gold);
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 15px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .support {
+      margin: 11px auto 0;
+      max-width: 280px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .category-nav {
+      position: sticky;
+      top: var(--search-height);
+      z-index: 45;
+      min-height: var(--nav-height);
+      padding: 11px 0 12px;
+      border-bottom: 1px solid rgba(216, 179, 74, 0.16);
+      background: rgba(2, 2, 2, 0.86);
+      backdrop-filter: blur(18px);
+      overflow: hidden;
+    }
+
+    .category-track {
+      display: flex;
+      gap: 9px;
+      overflow-x: auto;
+      padding: 0 14px;
+      scroll-padding: 14px;
+      scrollbar-width: none;
+    }
+
+    .category-track::-webkit-scrollbar {
+      display: none;
+    }
+
+    .category-btn {
+      flex: 0 0 auto;
+      border: 1px solid rgba(216, 179, 74, 0.24);
+      color: rgba(245, 241, 230, 0.74);
+      background: linear-gradient(145deg, rgba(24,24,24,0.92), rgba(12,12,12,0.92));
+      border-radius: 999px;
+      padding: 12px 15px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transition: color 200ms ease, border 200ms ease, background 200ms ease, transform 200ms ease, box-shadow 200ms ease;
+      white-space: nowrap;
+    }
+
+    .category-btn.is-active {
+      color: #171103;
+      border-color: rgba(244, 219, 131, 0.92);
+      background: linear-gradient(135deg, var(--gold-2), var(--gold));
+      box-shadow: 0 0 22px rgba(216, 179, 74, 0.28);
+      transform: translateY(-1px);
+    }
+
+    main {
+      padding: 18px 14px 26px;
+    }
+
+    .status-line {
+      min-height: 22px;
+      margin: 0 3px 10px;
+      color: rgba(245, 241, 230, 0.58);
+      font-size: 12px;
+      letter-spacing: 0.02em;
+    }
+
+    .menu-section {
+      scroll-margin-top: calc(var(--search-height) + var(--nav-height) + 18px);
+      padding: 16px 0 22px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: flex-end;
+      gap: 13px;
+      margin: 0 2px 15px;
+    }
+
+    .section-title {
+      font-family: 'Cinzel', Georgia, serif;
+      color: var(--gold-2);
+      font-size: 24px;
+      line-height: 1;
+      margin: 0;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+
+    .section-rule {
+      height: 1px;
+      flex: 1;
+      background: linear-gradient(90deg, rgba(216,179,74,0.52), transparent);
+      margin-bottom: 5px;
+    }
+
+    .section-count {
+      color: rgba(245, 241, 230, 0.48);
+      font-size: 12px;
+      margin-bottom: -1px;
+      white-space: nowrap;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .menu-card {
+      position: relative;
+      display: grid;
+      grid-template-columns: 104px 1fr;
+      min-height: 122px;
+      overflow: hidden;
+      border-radius: var(--radius);
+      border: 1px solid rgba(216, 179, 74, 0.19);
+      background:
+        linear-gradient(145deg, rgba(255,255,255,0.055), rgba(255,255,255,0.01)),
+        rgba(16, 16, 16, 0.74);
+      box-shadow: 0 14px 34px rgba(0,0,0,0.34), inset 0 1px 0 rgba(255,255,255,0.06);
+      opacity: 0;
+      transform: translateY(18px);
+      transition:
+        opacity 550ms ease,
+        transform 550ms ease,
+        border-color 220ms ease,
+        box-shadow 220ms ease;
+    }
+
+    .menu-card.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .menu-card:active {
+      transform: scale(0.992);
+    }
+
+    .menu-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at 10% 0%, rgba(216,179,74,0.15), transparent 12rem);
+      opacity: 0;
+      transition: opacity 240ms ease;
+    }
+
+    .menu-card:hover {
+      border-color: rgba(216, 179, 74, 0.4);
+      box-shadow: 0 18px 42px rgba(0,0,0,0.44), 0 0 24px rgba(216,179,74,0.09), inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+
+    .menu-card:hover::after {
+      opacity: 1;
+    }
+
+    .photo {
+      position: relative;
+      min-height: 122px;
+      background:
+        radial-gradient(circle at center, rgba(216,179,74,0.18), transparent 60%),
+        #0b0b0b;
+      overflow: hidden;
+    }
+
+    .photo img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      filter: saturate(0.92) contrast(1.08) brightness(0.86);
+      transform: scale(1.02);
+      transition: transform 420ms ease, filter 420ms ease;
+      cursor: pointer;
+    }
+
+    .menu-card:hover .photo img {
+      transform: scale(1.08);
+      filter: saturate(1.02) contrast(1.1) brightness(0.93);
+    }
+
+    .photo::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(0,0,0,0.52));
+      pointer-events: none;
+    }
+
+    .card-info {
+      padding: 15px 14px 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-width: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .item-name {
+      margin: 0;
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.28;
+      font-weight: 750;
+      letter-spacing: -0.01em;
+    }
+
+    .item-cat {
+      margin-top: 7px;
+      color: rgba(216, 179, 74, 0.78);
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 10.5px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .price-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 13px;
+    }
+
+    .mini-line {
+      height: 1px;
+      flex: 1;
+      background: linear-gradient(90deg, rgba(216,179,74,0.28), transparent);
+    }
+
+    .price {
+      flex: 0 0 auto;
+      color: var(--gold-2);
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      font-size: 14px;
+      text-shadow: 0 0 16px rgba(216,179,74,0.28);
+    }
+
+    .no-results {
+      display: none;
+      margin: 28px 2px 50px;
+      border: 1px solid rgba(216,179,74,0.24);
+      border-radius: 22px;
+      padding: 26px 18px;
+      text-align: center;
+      background: rgba(19, 17, 12, 0.66);
+      color: rgba(245,241,230,0.78);
+      box-shadow: var(--shadow);
+    }
+
+    .no-results strong {
+      display: block;
+      color: var(--gold-2);
+      font-family: 'Cinzel', Georgia, serif;
+      margin-bottom: 8px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    footer {
+      padding: 34px 20px 44px;
+      text-align: center;
+      border-top: 1px solid rgba(216,179,74,0.18);
+      background:
+        radial-gradient(circle at 50% 0, rgba(216,179,74,0.16), transparent 15rem),
+        #030303;
+    }
+
+    .footer-title {
+      margin: 0;
+      font-family: 'Cinzel', Georgia, serif;
+      color: var(--gold-2);
+      font-size: 22px;
+      letter-spacing: 0.04em;
+    }
+
+    .footer-sub {
+      margin: 9px 0 0;
+      color: rgba(245,241,230,0.58);
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .footer-line {
+      width: 94px;
+      height: 1px;
+      margin: 18px auto;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .footer-thanks {
+      margin: 0;
+      color: rgba(245,241,230,0.68);
+      font-size: 13px;
+    }
+
+    .back-top {
+      position: fixed;
+      right: max(14px, calc((100vw - 430px) / 2 + 14px));
+      bottom: 18px;
+      z-index: 60;
+      border: 1px solid rgba(216,179,74,0.42);
+      border-radius: 999px;
+      padding: 11px 14px;
+      color: #151006;
+      background: linear-gradient(135deg, var(--gold-2), var(--gold));
+      box-shadow: 0 12px 30px rgba(0,0,0,0.44), 0 0 20px rgba(216,179,74,0.18);
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(16px);
+      pointer-events: none;
+      transition: opacity 220ms ease, transform 220ms ease;
+    }
+
+    .back-top.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(0,0,0,0.84);
+      backdrop-filter: blur(12px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .modal.is-open {
+      display: flex;
+    }
+
+    .modal-card {
+      width: min(100%, 430px);
+      border: 1px solid rgba(216,179,74,0.32);
+      background: rgba(9, 9, 9, 0.94);
+      border-radius: 26px;
+      overflow: hidden;
+      box-shadow: 0 28px 80px rgba(0,0,0,0.78);
+    }
+
+    .modal-image {
+      width: 100%;
+      aspect-ratio: 1.2 / 1;
+      object-fit: cover;
+      display: block;
+    }
+
+    .modal-info {
+      padding: 17px 17px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .modal-name {
+      margin: 0;
+      font-family: 'Cinzel', Georgia, serif;
+      color: var(--gold-2);
+      font-size: 19px;
+      line-height: 1.25;
+    }
+
+    .modal-price {
+      margin-top: 7px;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .modal-close {
+      flex: 0 0 auto;
+      border: 1px solid rgba(216,179,74,0.28);
+      background: rgba(216,179,74,0.08);
+      color: var(--gold-2);
+      border-radius: 999px;
+      padding: 10px 13px;
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 12px;
+    }
+
+    @keyframes logoRise {
+      0% {
+        opacity: 0;
+        transform: translateY(26px) scale(0.96);
+        filter: blur(6px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+      }
+    }
+
+    @keyframes breathe {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 0.18;
+      }
+      50% {
+        transform: scale(1.05);
+        opacity: 0.34;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .menu-card {
+        grid-template-columns: 92px 1fr;
+      }
+
+      .section-title {
+        font-size: 21px;
+      }
+
+      .category-btn {
+        padding: 11px 13px;
+      }
+
+      .item-name {
+        font-size: 14px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      .menu-card {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="phone-frame" id="top">
+    <div class="search-shell">
+      <div class="search-wrap" role="search">
+        <span class="search-mark" aria-hidden="true"></span>
+        <input id="searchInput" type="search" placeholder="Kërko pije, koktej, verë..." autocomplete="off" aria-label="Kërko në menu">
+        <button id="clearSearch" type="button" aria-label="Pastro kërkimin">Pastro</button>
+      </div>
+    </div>
+
+    <header class="hero">
+      <div class="logo-aura">
+        <img class="brand-logo" src="logo/mels-longue-logo.png" alt="Mels Longue Bar logo">
+      </div>
+      <p class="eyebrow">Menu Digjitale</p>
+      <h1>Mels Longue Bar</h1>
+      <p class="subtitle">Menu Digjitale</p>
+      <p class="support">Zgjidh kategorinë dhe shijo momentin.</p>
+    </header>
+
+    <nav class="category-nav" aria-label="Kategoritë e menusë">
+      <div class="category-track" id="categoryTrack"></div>
+    </nav>
+
+    <main>
+      <p class="status-line" id="statusLine"></p>
+      <div id="menuRoot"></div>
+      <div class="no-results" id="noResults">
+        <strong>Nuk u gjet asnjë produkt.</strong>
+        <span>Provo një emër tjetër ose pastro kërkimin.</span>
+      </div>
+    </main>
+
+    <footer>
+      <p class="footer-title">Mels Longue Bar</p>
+      <p class="footer-sub">Menu Digjitale</p>
+      <div class="footer-line"></div>
+      <p class="footer-thanks">Faleminderit që na vizituat.</p>
+    </footer>
+  </div>
+
+  <button class="back-top" id="backTop" type="button">Lart</button>
+
+  <div class="modal" id="imageModal" aria-hidden="true">
+    <div class="modal-card">
+      <img class="modal-image" id="modalImage" alt="">
+      <div class="modal-info">
+        <div>
+          <p class="modal-name" id="modalName"></p>
+          <div class="modal-price" id="modalPrice"></div>
+        </div>
+        <button class="modal-close" id="modalClose" type="button">Mbyll</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const MENU_ITEMS = [
+  {
+    "id": "alkool-amaro-luciano",
+    "name": "Amaro Luciano",
+    "category": "Alkool",
+    "price": "250 lek",
+    "photoTerms": "Amaro Luciano premium liquor bottle bar",
+    "lock": 9001
+  },
+  {
+    "id": "alkool-amaro-montenegro",
+    "name": "Amaro Montenegro",
+    "category": "Alkool",
+    "price": "300 lek",
+    "photoTerms": "Amaro Montenegro premium liquor bottle bar",
+    "lock": 9002
+  },
+  {
+    "id": "alkool-aperol",
+    "name": "Aperol",
+    "category": "Alkool",
+    "price": "300 lek",
+    "photoTerms": "Aperol premium liquor bottle bar",
+    "lock": 9003
+  },
+  {
+    "id": "alkool-bacardi-white",
+    "name": "Bacardi White",
+    "category": "Alkool",
+    "price": "250 lek",
+    "photoTerms": "Bacardi White premium liquor bottle bar",
+    "lock": 9004
+  },
+  {
+    "id": "alkool-baileys",
+    "name": "Baileys",
+    "category": "Alkool",
+    "price": "250 lek",
+    "photoTerms": "Baileys premium liquor bottle bar",
+    "lock": 9005
+  },
+  {
+    "id": "alkool-ballentines",
+    "name": "Ballentines",
+    "category": "Alkool",
+    "price": "300 lek",
+    "photoTerms": "Ballentines premium liquor bottle bar",
+    "lock": 9006
+  },
+  {
+    "id": "alkool-belvedere",
+    "name": "Belvedere",
+    "category": "Alkool",
+    "price": "750 lek",
+    "photoTerms": "Belvedere premium liquor bottle bar",
+    "lock": 9007
+  },
+  {
+    "id": "alkool-black-label",
+    "name": "Black Label",
+    "category": "Alkool",
+    "price": "450 lek",
+    "photoTerms": "Black Label premium liquor bottle bar",
+    "lock": 9008
+  },
+  {
+    "id": "alkool-campari",
+    "name": "Campari",
+    "category": "Alkool",
+    "price": "250 lek",
+    "photoTerms": "Campari premium liquor bottle bar",
+    "lock": 9009
+  },
+  {
+    "id": "alkool-chivas-regal-12",
+    "name": "Chivas Regal 12",
+    "category": "Alkool",
+    "price": "400 lek",
+    "photoTerms": "Chivas Regal 12 premium liquor bottle bar",
+    "lock": 9010
+  },
+  {
+    "id": "alkool-chivas-regal-18",
+    "name": "Chivas Regal 18",
+    "category": "Alkool",
+    "price": "900 lek",
+    "photoTerms": "Chivas Regal 18 premium liquor bottle bar",
+    "lock": 9011
+  },
+  {
+    "id": "alkool-disaronno",
+    "name": "Disaronno",
+    "category": "Alkool",
+    "price": "300 lek",
+    "photoTerms": "Disaronno premium liquor bottle bar",
+    "lock": 9012
+  },
+  {
+    "id": "alkool-fernet",
+    "name": "Fernet",
+    "category": "Alkool",
+    "price": "100 lek",
+    "photoTerms": "Fernet premium liquor bottle bar",
+    "lock": 9013
+  },
+  {
+    "id": "alkool-fernet-branca",
+    "name": "Fernet Branca",
+    "category": "Alkool",
+    "price": "250 lek",
+    "photoTerms": "Fernet Branca premium liquor bottle bar",
+    "lock": 9014
+  },
+  {
+    "id": "alkool-gin-gordons",
+    "name": "Gin Gordons",
+    "category": "Alkool",
+    "price": "250 lek",
+    "photoTerms": "Gin Gordons premium liquor bottle bar",
+    "lock": 9015
+  },
+  {
+    "id": "alkool-gin-hendricks",
+    "name": "Gin Hendricks",
+    "category": "Alkool",
+    "price": "600 lek",
+    "photoTerms": "Gin Hendricks premium liquor bottle bar",
+    "lock": 9016
+  },
+  {
+    "id": "alkool-grey-gose",
+    "name": "Grey Gose",
+    "category": "Alkool",
+    "price": "650 lek",
+    "photoTerms": "Grey Gose premium liquor bottle bar",
+    "lock": 9017
+  },
+  {
+    "id": "alkool-hennessy",
+    "name": "Hennessy",
+    "category": "Alkool",
+    "price": "650 lek",
+    "photoTerms": "Hennessy premium liquor bottle bar",
+    "lock": 9018
+  },
+  {
+    "id": "alkool-irish-gin",
+    "name": "Irish Gin",
+    "category": "Alkool",
+    "price": "600 lek",
+    "photoTerms": "Irish Gin premium liquor bottle bar",
+    "lock": 9019
+  },
+  {
+    "id": "alkool-j-b",
+    "name": "J&B",
+    "category": "Alkool",
+    "price": "300 lek",
+    "photoTerms": "J B premium liquor bottle bar",
+    "lock": 9020
+  },
+  {
+    "id": "alkool-jack-daniel",
+    "name": "Jack Daniel",
+    "category": "Alkool",
+    "price": "350 lek",
+    "photoTerms": "Jack Daniel premium liquor bottle bar",
+    "lock": 9021
+  },
+  {
+    "id": "alkool-jagermeister",
+    "name": "Jagermeister",
+    "category": "Alkool",
+    "price": "300 lek",
+    "photoTerms": "Jagermeister premium liquor bottle bar",
+    "lock": 9022
+  },
+  {
+    "id": "alkool-konjak-martini",
+    "name": "Konjak Martini",
+    "category": "Alkool",
+    "price": "150 lek",
+    "photoTerms": "Konjak Martini premium liquor bottle bar",
+    "lock": 9023
+  },
+  {
+    "id": "alkool-konjak-renaissance",
+    "name": "Konjak Renaissance",
+    "category": "Alkool",
+    "price": "150 lek",
+    "photoTerms": "Konjak Renaissance premium liquor bottle bar",
+    "lock": 9024
+  },
+  {
+    "id": "alkool-konjak-skenderbeu",
+    "name": "Konjak Skenderbeu",
+    "category": "Alkool",
+    "price": "100 lek",
+    "photoTerms": "Konjak Skenderbeu premium liquor bottle bar",
+    "lock": 9025
+  },
+  {
+    "id": "alkool-limoncel",
+    "name": "Limoncel",
+    "category": "Alkool",
+    "price": "200 lek",
+    "photoTerms": "Limoncel premium liquor bottle bar",
+    "lock": 9026
+  },
+  {
+    "id": "birra-bavaria-0-alkool",
+    "name": "Bavaria 0% Alkool",
+    "category": "Birra",
+    "price": "200 lek",
+    "photoTerms": "Bavaria 0  Alkool premium beer bottle glass",
+    "lock": 9027
+  },
+  {
+    "id": "birra-bitburger",
+    "name": "Bitburger",
+    "category": "Birra",
+    "price": "250 lek",
+    "photoTerms": "Bitburger premium beer bottle glass",
+    "lock": 9028
+  },
+  {
+    "id": "birra-bitburger-0-alkool",
+    "name": "Bitburger 0% Alkool",
+    "category": "Birra",
+    "price": "250 lek",
+    "photoTerms": "Bitburger 0  Alkool premium beer bottle glass",
+    "lock": 9029
+  },
+  {
+    "id": "birra-corona",
+    "name": "Corona",
+    "category": "Birra",
+    "price": "300 lek",
+    "photoTerms": "Corona premium beer bottle glass",
+    "lock": 9030
+  },
+  {
+    "id": "birra-elbar",
+    "name": "Elbar",
+    "category": "Birra",
+    "price": "180 lek",
+    "photoTerms": "Elbar premium beer bottle glass",
+    "lock": 9031
+  },
+  {
+    "id": "birra-heineken-italian",
+    "name": "Heineken Italian",
+    "category": "Birra",
+    "price": "300 lek",
+    "photoTerms": "Heineken Italian premium beer bottle glass",
+    "lock": 9032
+  },
+  {
+    "id": "birra-paulaner",
+    "name": "Paulaner",
+    "category": "Birra",
+    "price": "350 lek",
+    "photoTerms": "Paulaner premium beer bottle glass",
+    "lock": 9033
+  },
+  {
+    "id": "birra-peja",
+    "name": "Peja",
+    "category": "Birra",
+    "price": "150 lek",
+    "photoTerms": "Peja premium beer bottle glass",
+    "lock": 9034
+  },
+  {
+    "id": "birra-peroni",
+    "name": "Peroni",
+    "category": "Birra",
+    "price": "200 lek",
+    "photoTerms": "Peroni premium beer bottle glass",
+    "lock": 9035
+  },
+  {
+    "id": "cocktails-analkolik",
+    "name": "Analkolik",
+    "category": "Cocktails",
+    "price": "300 lek",
+    "photoTerms": "Analkolik premium cocktail drink bar",
+    "lock": 9036
+  },
+  {
+    "id": "cocktails-aperol-spritz",
+    "name": "Aperol Spritz",
+    "category": "Cocktails",
+    "price": "350 lek",
+    "photoTerms": "Aperol Spritz premium cocktail drink bar",
+    "lock": 9037
+  },
+  {
+    "id": "cocktails-black-russian",
+    "name": "Black Russian",
+    "category": "Cocktails",
+    "price": "400 lek",
+    "photoTerms": "Black Russian premium cocktail drink bar",
+    "lock": 9038
+  },
+  {
+    "id": "cocktails-blue-laguna",
+    "name": "Blue Laguna",
+    "category": "Cocktails",
+    "price": "500 lek",
+    "photoTerms": "Blue Laguna premium cocktail drink bar",
+    "lock": 9039
+  },
+  {
+    "id": "cocktails-capriosca",
+    "name": "Capriosca",
+    "category": "Cocktails",
+    "price": "400 lek",
+    "photoTerms": "Capriosca premium cocktail drink bar",
+    "lock": 9040
+  },
+  {
+    "id": "cocktails-cosmopolitan",
+    "name": "Cosmopolitan",
+    "category": "Cocktails",
+    "price": "400 lek",
+    "photoTerms": "Cosmopolitan premium cocktail drink bar",
+    "lock": 9041
+  },
+  {
+    "id": "cocktails-daquiri",
+    "name": "Daquiri",
+    "category": "Cocktails",
+    "price": "400 lek",
+    "photoTerms": "Daquiri premium cocktail drink bar",
+    "lock": 9042
+  },
+  {
+    "id": "cocktails-desperado",
+    "name": "Desperado",
+    "category": "Cocktails",
+    "price": "400 lek",
+    "photoTerms": "Desperado premium cocktail drink bar",
+    "lock": 9043
+  },
+  {
+    "id": "cocktails-disaronno-sour",
+    "name": "Disaronno Sour",
+    "category": "Cocktails",
+    "price": "400 lek",
+    "photoTerms": "Disaronno Sour premium cocktail drink bar",
+    "lock": 9044
+  },
+  {
+    "id": "cocktails-eleonor",
+    "name": "Eleonor",
+    "category": "Cocktails",
+    "price": "600 lek",
+    "photoTerms": "Eleonor premium cocktail drink bar",
+    "lock": 9045
+  },
+  {
+    "id": "cocktails-goodfather",
+    "name": "Goodfather",
+    "category": "Cocktails",
+    "price": "400 lek",
+    "photoTerms": "Goodfather premium cocktail drink bar",
+    "lock": 9046
+  },
+  {
+    "id": "cocktails-kokteil-me-alkool",
+    "name": "Kokteil me Alkool",
+    "category": "Cocktails",
+    "price": "450 lek",
+    "photoTerms": "Kokteil me Alkool premium cocktail drink bar",
+    "lock": 9047
+  },
+  {
+    "id": "cocktails-london-mule",
+    "name": "London Mule",
+    "category": "Cocktails",
+    "price": "400 lek",
+    "photoTerms": "London Mule premium cocktail drink bar",
+    "lock": 9048
+  },
+  {
+    "id": "cocktails-long-island",
+    "name": "Long Island",
+    "category": "Cocktails",
+    "price": "500 lek",
+    "photoTerms": "Long Island premium cocktail drink bar",
+    "lock": 9049
+  },
+  {
+    "id": "cocktails-mango-love",
+    "name": "Mango Love",
+    "category": "Cocktails",
+    "price": "400 lek",
+    "photoTerms": "Mango Love premium cocktail drink bar",
+    "lock": 9050
+  },
+  {
+    "id": "cocktails-margarita",
+    "name": "Margarita",
+    "category": "Cocktails",
+    "price": "350 lek",
+    "photoTerms": "Margarita premium cocktail drink bar",
+    "lock": 9051
+  },
+  {
+    "id": "cocktails-mojito",
+    "name": "Mojito",
+    "category": "Cocktails",
+    "price": "400 lek",
+    "photoTerms": "Mojito premium cocktail drink bar",
+    "lock": 9052
+  },
+  {
+    "id": "cocktails-pina-colada",
+    "name": "Pina Colada",
+    "category": "Cocktails",
+    "price": "450 lek",
+    "photoTerms": "Pina Colada premium cocktail drink bar",
+    "lock": 9053
+  },
+  {
+    "id": "cocktails-sex-on-the-beach",
+    "name": "Sex on the Beach",
+    "category": "Cocktails",
+    "price": "500 lek",
+    "photoTerms": "Sex on the Beach premium cocktail drink bar",
+    "lock": 9054
+  },
+  {
+    "id": "cocktails-tequila-sunrise",
+    "name": "Tequila Sunrise",
+    "category": "Cocktails",
+    "price": "350 lek",
+    "photoTerms": "Tequila Sunrise premium cocktail drink bar",
+    "lock": 9055
+  },
+  {
+    "id": "cocktails-vodka-sour",
+    "name": "Vodka Sour",
+    "category": "Cocktails",
+    "price": "500 lek",
+    "photoTerms": "Vodka Sour premium cocktail drink bar",
+    "lock": 9056
+  },
+  {
+    "id": "lengje-te-fresketa-leng-frutash-mix",
+    "name": "Lëng frutash mix",
+    "category": "Lëngje të Freskëta",
+    "price": "300 lek",
+    "photoTerms": "Leng frutash mix fresh juice glass fruit",
+    "lock": 9057
+  },
+  {
+    "id": "lengje-te-fresketa-leng-jete",
+    "name": "Lëng jete",
+    "category": "Lëngje të Freskëta",
+    "price": "350 lek",
+    "photoTerms": "Leng jete fresh juice glass fruit",
+    "lock": 9058
+  },
+  {
+    "id": "lengje-te-fresketa-leng-mix-molle-karrote",
+    "name": "Lëng mix mollë karrotë",
+    "category": "Lëngje të Freskëta",
+    "price": "350 lek",
+    "photoTerms": "Leng mix molle karrote fresh juice glass fruit",
+    "lock": 9059
+  },
+  {
+    "id": "lengje-te-fresketa-leng-molle",
+    "name": "Lëng mollë",
+    "category": "Lëngje të Freskëta",
+    "price": "300 lek",
+    "photoTerms": "Leng molle fresh juice glass fruit",
+    "lock": 9060
+  },
+  {
+    "id": "lengje-te-fresketa-leng-portokalli",
+    "name": "Lëng portokalli",
+    "category": "Lëngje të Freskëta",
+    "price": "250 lek",
+    "photoTerms": "Leng portokalli fresh juice glass fruit",
+    "lock": 9061
+  },
+  {
+    "id": "lengje-te-fresketa-leng-shege",
+    "name": "Lëng shege",
+    "category": "Lëngje të Freskëta",
+    "price": "300 lek",
+    "photoTerms": "Leng shege fresh juice glass fruit",
+    "lock": 9062
+  },
+  {
+    "id": "lengje-te-fresketa-milkshake",
+    "name": "Milkshake",
+    "category": "Lëngje të Freskëta",
+    "price": "200 lek",
+    "photoTerms": "Milkshake fresh juice glass fruit",
+    "lock": 9063
+  },
+  {
+    "id": "lengje-te-fresketa-smoothie",
+    "name": "Smoothie",
+    "category": "Lëngje të Freskëta",
+    "price": "300 lek",
+    "photoTerms": "Smoothie fresh juice glass fruit",
+    "lock": 9064
+  },
+  {
+    "id": "long-drinks-bacardi-cola",
+    "name": "Bacardi-Cola",
+    "category": "Long Drinks",
+    "price": "400 lek",
+    "photoTerms": "Bacardi Cola mixed drink highball cocktail",
+    "lock": 9065
+  },
+  {
+    "id": "long-drinks-chivas-cola",
+    "name": "Chivas-Cola",
+    "category": "Long Drinks",
+    "price": "600 lek",
+    "photoTerms": "Chivas Cola mixed drink highball cocktail",
+    "lock": 9066
+  },
+  {
+    "id": "long-drinks-chivas-redbull",
+    "name": "Chivas-RedBull",
+    "category": "Long Drinks",
+    "price": "600 lek",
+    "photoTerms": "Chivas RedBull mixed drink highball cocktail",
+    "lock": 9067
+  },
+  {
+    "id": "long-drinks-jack-cola",
+    "name": "Jack-Cola",
+    "category": "Long Drinks",
+    "price": "500 lek",
+    "photoTerms": "Jack Cola mixed drink highball cocktail",
+    "lock": 9068
+  },
+  {
+    "id": "long-drinks-jack-redbull",
+    "name": "Jack-RedBull",
+    "category": "Long Drinks",
+    "price": "600 lek",
+    "photoTerms": "Jack RedBull mixed drink highball cocktail",
+    "lock": 9069
+  },
+  {
+    "id": "long-drinks-jager-redbull",
+    "name": "Jager-RedBull",
+    "category": "Long Drinks",
+    "price": "600 lek",
+    "photoTerms": "Jager RedBull mixed drink highball cocktail",
+    "lock": 9070
+  },
+  {
+    "id": "long-drinks-vodka-lemon",
+    "name": "Vodka-Lemon",
+    "category": "Long Drinks",
+    "price": "400 lek",
+    "photoTerms": "Vodka Lemon mixed drink highball cocktail",
+    "lock": 9071
+  },
+  {
+    "id": "long-drinks-vodka-portokall",
+    "name": "Vodka-Portokall",
+    "category": "Long Drinks",
+    "price": "400 lek",
+    "photoTerms": "Vodka Portokall mixed drink highball cocktail",
+    "lock": 9072
+  },
+  {
+    "id": "long-drinks-vodka-redbull",
+    "name": "Vodka-RedBull",
+    "category": "Long Drinks",
+    "price": "500 lek",
+    "photoTerms": "Vodka RedBull mixed drink highball cocktail",
+    "lock": 9073
+  },
+  {
+    "id": "long-drinks-vodka-tonic",
+    "name": "Vodka-Tonic",
+    "category": "Long Drinks",
+    "price": "400 lek",
+    "photoTerms": "Vodka Tonic mixed drink highball cocktail",
+    "lock": 9074
+  },
+  {
+    "id": "pije-freskuese-amita",
+    "name": "Amita",
+    "category": "Pije Freskuese",
+    "price": "120 lek",
+    "photoTerms": "Amita soft drink bottle glass",
+    "lock": 9075
+  },
+  {
+    "id": "pije-freskuese-aranciata-rosse",
+    "name": "Aranciata Rosse",
+    "category": "Pije Freskuese",
+    "price": "250 lek",
+    "photoTerms": "Aranciata Rosse soft drink bottle glass",
+    "lock": 9076
+  },
+  {
+    "id": "pije-freskuese-b52",
+    "name": "B52",
+    "category": "Pije Freskuese",
+    "price": "180 lek",
+    "photoTerms": "B52 soft drink bottle glass",
+    "lock": 9077
+  },
+  {
+    "id": "pije-freskuese-biter",
+    "name": "Biter",
+    "category": "Pije Freskuese",
+    "price": "80 lek",
+    "photoTerms": "Biter soft drink bottle glass",
+    "lock": 9078
+  },
+  {
+    "id": "pije-freskuese-bravo",
+    "name": "Bravo",
+    "category": "Pije Freskuese",
+    "price": "170 lek",
+    "photoTerms": "Bravo soft drink bottle glass",
+    "lock": 9079
+  },
+  {
+    "id": "pije-freskuese-cherry-tonik",
+    "name": "Cherry Tonik",
+    "category": "Pije Freskuese",
+    "price": "250 lek",
+    "photoTerms": "Cherry Tonik soft drink bottle glass",
+    "lock": 9080
+  },
+  {
+    "id": "pije-freskuese-coca-cola",
+    "name": "Coca Cola",
+    "category": "Pije Freskuese",
+    "price": "170 lek",
+    "photoTerms": "Coca Cola soft drink bottle glass",
+    "lock": 9081
+  },
+  {
+    "id": "pije-freskuese-crodino",
+    "name": "Crodino",
+    "category": "Pije Freskuese",
+    "price": "150 lek",
+    "photoTerms": "Crodino soft drink bottle glass",
+    "lock": 9082
+  },
+  {
+    "id": "pije-freskuese-fanta",
+    "name": "Fanta",
+    "category": "Pije Freskuese",
+    "price": "170 lek",
+    "photoTerms": "Fanta soft drink bottle glass",
+    "lock": 9083
+  },
+  {
+    "id": "pije-freskuese-golden-eagle",
+    "name": "Golden Eagle",
+    "category": "Pije Freskuese",
+    "price": "170 lek",
+    "photoTerms": "Golden Eagle soft drink bottle glass",
+    "lock": 9084
+  },
+  {
+    "id": "pije-freskuese-ivi",
+    "name": "Ivi",
+    "category": "Pije Freskuese",
+    "price": "170 lek",
+    "photoTerms": "Ivi soft drink bottle glass",
+    "lock": 9085
+  },
+  {
+    "id": "pije-freskuese-lemon-soda",
+    "name": "Lemon Soda",
+    "category": "Pije Freskuese",
+    "price": "170 lek",
+    "photoTerms": "Lemon Soda soft drink bottle glass",
+    "lock": 9086
+  },
+  {
+    "id": "pije-freskuese-lipton-ice-tea",
+    "name": "Lipton Ice Tea",
+    "category": "Pije Freskuese",
+    "price": "170 lek",
+    "photoTerms": "Lipton Ice Tea soft drink bottle glass",
+    "lock": 9087
+  },
+  {
+    "id": "pije-freskuese-nescaffe",
+    "name": "Nescaffe",
+    "category": "Pije Freskuese",
+    "price": "150 lek",
+    "photoTerms": "Nescaffe soft drink bottle glass",
+    "lock": 9088
+  },
+  {
+    "id": "pije-freskuese-orange-soda",
+    "name": "Orange Soda",
+    "category": "Pije Freskuese",
+    "price": "170 lek",
+    "photoTerms": "Orange Soda soft drink bottle glass",
+    "lock": 9089
+  },
+  {
+    "id": "pije-freskuese-red-bull",
+    "name": "Red Bull",
+    "category": "Pije Freskuese",
+    "price": "300 lek",
+    "photoTerms": "Red Bull soft drink bottle glass",
+    "lock": 9090
+  },
+  {
+    "id": "pije-freskuese-rose-kanace",
+    "name": "Rose Kanace",
+    "category": "Pije Freskuese",
+    "price": "170 lek",
+    "photoTerms": "Rose Kanace soft drink bottle glass",
+    "lock": 9091
+  },
+  {
+    "id": "pije-freskuese-rose-lemonade",
+    "name": "Rose Lemonade",
+    "category": "Pije Freskuese",
+    "price": "450 lek",
+    "photoTerms": "Rose Lemonade soft drink bottle glass",
+    "lock": 9092
+  },
+  {
+    "id": "pije-freskuese-schweppes",
+    "name": "Schweppes",
+    "category": "Pije Freskuese",
+    "price": "120 lek",
+    "photoTerms": "Schweppes soft drink bottle glass",
+    "lock": 9093
+  },
+  {
+    "id": "pije-freskuese-uje-me-gaz",
+    "name": "Ujë me gaz",
+    "category": "Pije Freskuese",
+    "price": "70 lek",
+    "photoTerms": "Uje me gaz soft drink bottle glass",
+    "lock": 9094
+  },
+  {
+    "id": "pije-freskuese-uje-me-gaz-qelqi",
+    "name": "Ujë me gaz qelqi",
+    "category": "Pije Freskuese",
+    "price": "80 lek",
+    "photoTerms": "Uje me gaz qelqi soft drink bottle glass",
+    "lock": 9095
+  },
+  {
+    "id": "pije-freskuese-uje-me-vitamina",
+    "name": "Ujë me vitamina",
+    "category": "Pije Freskuese",
+    "price": "120 lek",
+    "photoTerms": "Uje me vitamina soft drink bottle glass",
+    "lock": 9096
+  },
+  {
+    "id": "pije-freskuese-uje-natyral",
+    "name": "Ujë natyral",
+    "category": "Pije Freskuese",
+    "price": "70 lek",
+    "photoTerms": "Uje natyral soft drink bottle glass",
+    "lock": 9097
+  },
+  {
+    "id": "pije-freskuese-uje-natyral-qelqi",
+    "name": "Ujë natyral qelqi",
+    "category": "Pije Freskuese",
+    "price": "80 lek",
+    "photoTerms": "Uje natyral qelqi soft drink bottle glass",
+    "lock": 9098
+  },
+  {
+    "id": "te-ngrohta-bacardi-coffe",
+    "name": "Bacardi Coffe",
+    "category": "Të Ngrohta",
+    "price": "200 lek",
+    "photoTerms": "Bacardi Coffe premium coffee tea cup",
+    "lock": 9099
+  },
+  {
+    "id": "te-ngrohta-caf-mio",
+    "name": "Café Mio",
+    "category": "Të Ngrohta",
+    "price": "300 lek",
+    "photoTerms": "Caf  Mio premium coffee tea cup",
+    "lock": 9100
+  },
+  {
+    "id": "te-ngrohta-caffe-giseng",
+    "name": "Caffe Giseng",
+    "category": "Të Ngrohta",
+    "price": "80 lek",
+    "photoTerms": "Caffe Giseng premium coffee tea cup",
+    "lock": 9101
+  },
+  {
+    "id": "te-ngrohta-caj-bio",
+    "name": "Çaj Bio",
+    "category": "Të Ngrohta",
+    "price": "150 lek",
+    "photoTerms": "Caj Bio premium coffee tea cup",
+    "lock": 9102
+  },
+  {
+    "id": "te-ngrohta-caj-i-ngrohte",
+    "name": "Çaj i ngrohtë",
+    "category": "Të Ngrohta",
+    "price": "70 lek",
+    "photoTerms": "Caj i ngrohte premium coffee tea cup",
+    "lock": 9103
+  },
+  {
+    "id": "te-ngrohta-chocolate-dubai",
+    "name": "Chocolate Dubai",
+    "category": "Të Ngrohta",
+    "price": "250 lek",
+    "photoTerms": "Chocolate Dubai premium coffee tea cup",
+    "lock": 9104
+  },
+  {
+    "id": "te-ngrohta-coko-fredo",
+    "name": "Coko Fredo",
+    "category": "Të Ngrohta",
+    "price": "170 lek",
+    "photoTerms": "Coko Fredo premium coffee tea cup",
+    "lock": 9105
+  },
+  {
+    "id": "te-ngrohta-cokollate-e-nxehte",
+    "name": "Çokollatë e nxehtë",
+    "category": "Të Ngrohta",
+    "price": "170 lek",
+    "photoTerms": "Cokollate e nxehte premium coffee tea cup",
+    "lock": 9106
+  },
+  {
+    "id": "te-ngrohta-cream-coffee",
+    "name": "Cream Coffee",
+    "category": "Të Ngrohta",
+    "price": "150 lek",
+    "photoTerms": "Cream Coffee premium coffee tea cup",
+    "lock": 9107
+  },
+  {
+    "id": "te-ngrohta-decaffeinato",
+    "name": "Decaffeinato",
+    "category": "Të Ngrohta",
+    "price": "90 lek",
+    "photoTerms": "Decaffeinato premium coffee tea cup",
+    "lock": 9108
+  },
+  {
+    "id": "te-ngrohta-esspreso-fredo",
+    "name": "Esspreso Fredo",
+    "category": "Të Ngrohta",
+    "price": "130 lek",
+    "photoTerms": "Esspreso Fredo premium coffee tea cup",
+    "lock": 9109
+  },
+  {
+    "id": "te-ngrohta-frape",
+    "name": "Frape",
+    "category": "Të Ngrohta",
+    "price": "150 lek",
+    "photoTerms": "Frape premium coffee tea cup",
+    "lock": 9110
+  },
+  {
+    "id": "te-ngrohta-freddoccino",
+    "name": "Freddoccino",
+    "category": "Të Ngrohta",
+    "price": "170 lek",
+    "photoTerms": "Freddoccino premium coffee tea cup",
+    "lock": 9111
+  },
+  {
+    "id": "te-ngrohta-kafe",
+    "name": "Kafe",
+    "category": "Të Ngrohta",
+    "price": "70 lek",
+    "photoTerms": "Kafe premium coffee tea cup",
+    "lock": 9112
+  },
+  {
+    "id": "te-ngrohta-kafe-amerikane",
+    "name": "Kafe Amerikane",
+    "category": "Të Ngrohta",
+    "price": "130 lek",
+    "photoTerms": "Kafe Amerikane premium coffee tea cup",
+    "lock": 9113
+  },
+  {
+    "id": "te-ngrohta-kafe-gjysem",
+    "name": "Kafe Gjysëm",
+    "category": "Të Ngrohta",
+    "price": "70 lek",
+    "photoTerms": "Kafe Gjysem premium coffee tea cup",
+    "lock": 9114
+  },
+  {
+    "id": "te-ngrohta-kafe-latte",
+    "name": "Kafe Latte",
+    "category": "Të Ngrohta",
+    "price": "150 lek",
+    "photoTerms": "Kafe Latte premium coffee tea cup",
+    "lock": 9115
+  },
+  {
+    "id": "te-ngrohta-kafe-madhe",
+    "name": "Kafe Madhe",
+    "category": "Të Ngrohta",
+    "price": "140 lek",
+    "photoTerms": "Kafe Madhe premium coffee tea cup",
+    "lock": 9116
+  },
+  {
+    "id": "te-ngrohta-kakao",
+    "name": "Kakao",
+    "category": "Të Ngrohta",
+    "price": "170 lek",
+    "photoTerms": "Kakao premium coffee tea cup",
+    "lock": 9117
+  },
+  {
+    "id": "te-ngrohta-kakao-e-ftohte",
+    "name": "Kakao e ftohtë",
+    "category": "Të Ngrohta",
+    "price": "170 lek",
+    "photoTerms": "Kakao e ftohte premium coffee tea cup",
+    "lock": 9118
+  },
+  {
+    "id": "te-ngrohta-kakao-e-vogel",
+    "name": "Kakao e vogël",
+    "category": "Të Ngrohta",
+    "price": "80 lek",
+    "photoTerms": "Kakao e vogel premium coffee tea cup",
+    "lock": 9119
+  },
+  {
+    "id": "te-ngrohta-kapucino-bustine",
+    "name": "Kapucino bustine",
+    "category": "Të Ngrohta",
+    "price": "170 lek",
+    "photoTerms": "Kapucino bustine premium coffee tea cup",
+    "lock": 9120
+  },
+  {
+    "id": "te-ngrohta-kapucino-me-kafe",
+    "name": "Kapucino me kafe",
+    "category": "Të Ngrohta",
+    "price": "150 lek",
+    "photoTerms": "Kapucino me kafe premium coffee tea cup",
+    "lock": 9121
+  },
+  {
+    "id": "te-ngrohta-korreto",
+    "name": "Korreto",
+    "category": "Të Ngrohta",
+    "price": "150 lek",
+    "photoTerms": "Korreto premium coffee tea cup",
+    "lock": 9122
+  },
+  {
+    "id": "te-ngrohta-makiato",
+    "name": "Makiato",
+    "category": "Të Ngrohta",
+    "price": "80 lek",
+    "photoTerms": "Makiato premium coffee tea cup",
+    "lock": 9123
+  },
+  {
+    "id": "te-ngrohta-makiato-fredo",
+    "name": "Makiato Fredo",
+    "category": "Të Ngrohta",
+    "price": "130 lek",
+    "photoTerms": "Makiato Fredo premium coffee tea cup",
+    "lock": 9124
+  },
+  {
+    "id": "te-ngrohta-makiato-madhe",
+    "name": "Makiato Madhe",
+    "category": "Të Ngrohta",
+    "price": "130 lek",
+    "photoTerms": "Makiato Madhe premium coffee tea cup",
+    "lock": 9125
+  },
+  {
+    "id": "te-ngrohta-marocchino",
+    "name": "Marocchino",
+    "category": "Të Ngrohta",
+    "price": "100 lek",
+    "photoTerms": "Marocchino premium coffee tea cup",
+    "lock": 9126
+  },
+  {
+    "id": "te-ngrohta-marocchino-e-ftohte",
+    "name": "Marocchino e ftohtë",
+    "category": "Të Ngrohta",
+    "price": "180 lek",
+    "photoTerms": "Marocchino e ftohte premium coffee tea cup",
+    "lock": 9127
+  },
+  {
+    "id": "te-ngrohta-matcha-late",
+    "name": "Matcha Late",
+    "category": "Të Ngrohta",
+    "price": "170 lek",
+    "photoTerms": "Matcha Late premium coffee tea cup",
+    "lock": 9128
+  },
+  {
+    "id": "te-ngrohta-qumesht",
+    "name": "Qumësht",
+    "category": "Të Ngrohta",
+    "price": "100 lek",
+    "photoTerms": "Qumesht premium coffee tea cup",
+    "lock": 9129
+  },
+  {
+    "id": "te-ngrohta-salep",
+    "name": "Salep",
+    "category": "Të Ngrohta",
+    "price": "170 lek",
+    "photoTerms": "Salep premium coffee tea cup",
+    "lock": 9130
+  },
+  {
+    "id": "vere-chardonnay",
+    "name": "Chardonnay",
+    "category": "Verë",
+    "price": "1400 lek",
+    "photoTerms": "Chardonnay wine bottle glass premium",
+    "lock": 9131
+  },
+  {
+    "id": "vere-chianti",
+    "name": "Chianti",
+    "category": "Verë",
+    "price": "2000 lek",
+    "photoTerms": "Chianti wine bottle glass premium",
+    "lock": 9132
+  },
+  {
+    "id": "vere-donnaluce",
+    "name": "Donnaluce",
+    "category": "Verë",
+    "price": "5000 lek",
+    "photoTerms": "Donnaluce wine bottle glass premium",
+    "lock": 9133
+  },
+  {
+    "id": "vere-gote-vere-e-bardhe",
+    "name": "Gotë verë e bardhë",
+    "category": "Verë",
+    "price": "200 lek",
+    "photoTerms": "Gote vere e bardhe wine bottle glass premium",
+    "lock": 9134
+  },
+  {
+    "id": "vere-gote-vere-e-kuqe",
+    "name": "Gotë verë e kuqe",
+    "category": "Verë",
+    "price": "200 lek",
+    "photoTerms": "Gote vere e kuqe wine bottle glass premium",
+    "lock": 9135
+  },
+  {
+    "id": "vere-goverano",
+    "name": "Goverano",
+    "category": "Verë",
+    "price": "2600 lek",
+    "photoTerms": "Goverano wine bottle glass premium",
+    "lock": 9136
+  },
+  {
+    "id": "vere-juli",
+    "name": "Juli",
+    "category": "Verë",
+    "price": "1200 lek",
+    "photoTerms": "Juli wine bottle glass premium",
+    "lock": 9137
+  },
+  {
+    "id": "vere-montepuciano",
+    "name": "Montepuciano",
+    "category": "Verë",
+    "price": "2000 lek",
+    "photoTerms": "Montepuciano wine bottle glass premium",
+    "lock": 9138
+  },
+  {
+    "id": "vere-papale",
+    "name": "Papale",
+    "category": "Verë",
+    "price": "5000 lek",
+    "photoTerms": "Papale wine bottle glass premium",
+    "lock": 9139
+  },
+  {
+    "id": "vere-pinot-rose",
+    "name": "Pinot Rose",
+    "category": "Verë",
+    "price": "2600 lek",
+    "photoTerms": "Pinot Rose wine bottle glass premium",
+    "lock": 9140
+  },
+  {
+    "id": "vere-pinot-grigo",
+    "name": "Pinot Grigo",
+    "category": "Verë",
+    "price": "1600 lek",
+    "photoTerms": "Pinot Grigo wine bottle glass premium",
+    "lock": 9141
+  },
+  {
+    "id": "vere-primitivo-12-mezzo",
+    "name": "Primitivo 12 Mezzo",
+    "category": "Verë",
+    "price": "2600 lek",
+    "photoTerms": "Primitivo 12 Mezzo wine bottle glass premium",
+    "lock": 9142
+  },
+  {
+    "id": "vere-primitivo-zimfodel",
+    "name": "Primitivo Zimfodel",
+    "category": "Verë",
+    "price": "1600 lek",
+    "photoTerms": "Primitivo Zimfodel wine bottle glass premium",
+    "lock": 9143
+  },
+  {
+    "id": "vere-toscano",
+    "name": "Toscano",
+    "category": "Verë",
+    "price": "3000 lek",
+    "photoTerms": "Toscano wine bottle glass premium",
+    "lock": 9144
+  },
+  {
+    "id": "vere-vere-chardonnay-puglia-e-bardhe",
+    "name": "Verë Chardonnay Puglia e bardhë",
+    "category": "Verë",
+    "price": "1000 lek",
+    "photoTerms": "Vere Chardonnay Puglia e bardhe wine bottle glass premium",
+    "lock": 9145
+  },
+  {
+    "id": "snacks-akullore-kupe",
+    "name": "Akullore kupe",
+    "category": "Snacks",
+    "price": "60 lek",
+    "photoTerms": "Akullore kupe premium snack food plate",
+    "lock": 9146
+  },
+  {
+    "id": "snacks-akullore-pistachio",
+    "name": "Akullore Pistachio",
+    "category": "Snacks",
+    "price": "120 lek",
+    "photoTerms": "Akullore Pistachio premium snack food plate",
+    "lock": 9147
+  },
+  {
+    "id": "snacks-antipaste-e-ftohte-e-madhe",
+    "name": "Antipastë e ftohtë e madhe",
+    "category": "Snacks",
+    "price": "600 lek",
+    "photoTerms": "Antipaste e ftohte e madhe premium snack food plate",
+    "lock": 9148
+  },
+  {
+    "id": "snacks-antipaste-e-ftohte-e-vogel",
+    "name": "Antipastë e ftohtë e vogël",
+    "category": "Snacks",
+    "price": "300 lek",
+    "photoTerms": "Antipaste e ftohte e vogel premium snack food plate",
+    "lock": 9149
+  },
+  {
+    "id": "snacks-briosh",
+    "name": "Briosh",
+    "category": "Snacks",
+    "price": "100 lek",
+    "photoTerms": "Briosh premium snack food plate",
+    "lock": 9150
+  },
+  {
+    "id": "snacks-fruta",
+    "name": "Fruta",
+    "category": "Snacks",
+    "price": "400 lek",
+    "photoTerms": "Fruta premium snack food plate",
+    "lock": 9151
+  },
+  {
+    "id": "snacks-tost",
+    "name": "Tost",
+    "category": "Snacks",
+    "price": "100 lek",
+    "photoTerms": "Tost premium snack food plate",
+    "lock": 9152
+  },
+  {
+    "id": "shisha-shisha-banane",
+    "name": "Shisha banane",
+    "category": "Shisha",
+    "price": "1000 lek",
+    "photoTerms": "Shisha banane premium hookah shisha lounge",
+    "lock": 9153
+  },
+  {
+    "id": "shisha-shisha-boronic",
+    "name": "Shisha Boronic",
+    "category": "Shisha",
+    "price": "1000 lek",
+    "photoTerms": "Shisha Boronic premium hookah shisha lounge",
+    "lock": 9154
+  },
+  {
+    "id": "shisha-shisha-cumcakiz",
+    "name": "Shisha Cumcakiz",
+    "category": "Shisha",
+    "price": "1000 lek",
+    "photoTerms": "Shisha Cumcakiz premium hookah shisha lounge",
+    "lock": 9155
+  },
+  {
+    "id": "shisha-shisha-dardh",
+    "name": "Shisha Dardh",
+    "category": "Shisha",
+    "price": "1000 lek",
+    "photoTerms": "Shisha Dardh premium hookah shisha lounge",
+    "lock": 9156
+  },
+  {
+    "id": "shisha-shisha-frozenbluebarry",
+    "name": "Shisha FrozenBluebarry",
+    "category": "Shisha",
+    "price": "1000 lek",
+    "photoTerms": "Shisha FrozenBluebarry premium hookah shisha lounge",
+    "lock": 9157
+  },
+  {
+    "id": "shisha-shisha-frutpasion",
+    "name": "Shisha FrutPasion",
+    "category": "Shisha",
+    "price": "1000 lek",
+    "photoTerms": "Shisha FrutPasion premium hookah shisha lounge",
+    "lock": 9158
+  },
+  {
+    "id": "shisha-shisha-hi-tech",
+    "name": "Shisha HI-TECH",
+    "category": "Shisha",
+    "price": "1000 lek",
+    "photoTerms": "Shisha HI TECH premium hookah shisha lounge",
+    "lock": 9159
+  },
+  {
+    "id": "shisha-shisha-limon",
+    "name": "Shisha Limon",
+    "category": "Shisha",
+    "price": "1000 lek",
+    "photoTerms": "Shisha Limon premium hookah shisha lounge",
+    "lock": 9160
+  },
+  {
+    "id": "shisha-shisha-mango",
+    "name": "Shisha Mango",
+    "category": "Shisha",
+    "price": "1000 lek",
+    "photoTerms": "Shisha Mango premium hookah shisha lounge",
+    "lock": 9161
+  },
+  {
+    "id": "shisha-shisha-rrushmente",
+    "name": "Shisha Rrushmente",
+    "category": "Shisha",
+    "price": "1000 lek",
+    "photoTerms": "Shisha Rrushmente premium hookah shisha lounge",
+    "lock": 9162
+  },
+  {
+    "id": "shisha-shisha-shalqi",
+    "name": "Shisha Shalqi",
+    "category": "Shisha",
+    "price": "1000 lek",
+    "photoTerms": "Shisha Shalqi premium hookah shisha lounge",
+    "lock": 9163
+  }
+];
+
+    const CATEGORIES = [
+      "Alkool",
+      "Birra",
+      "Cocktails",
+      "Lëngje të Freskëta",
+      "Long Drinks",
+      "Pije Freskuese",
+      "Të Ngrohta",
+      "Verë",
+      "Snacks",
+      "Shisha"
+    ];
+
+    const CUSTOM_IMAGES = {
+      "alkool-amaro-luciano": "alkool/amaro-luciano.webp",
+      "alkool-amaro-montenegro": "alkool/amaro-montenegro.webp",
+      "alkool-aperol": "alkool/aperol.webp",
+      "alkool-bacardi-white": "alkool/bacardi-white.webp",
+      "alkool-baileys": "alkool/baileys.webp",
+      "alkool-ballentines": "alkool/ballentines.webp",
+      "alkool-belvedere": "alkool/belvedere.webp",
+      "alkool-black-label": "alkool/black-label.webp",
+      "alkool-campari": "alkool/campari.webp",
+      "alkool-chivas-regal-12": "alkool/chivas-regal-12.webp",
+      "alkool-chivas-regal-18": "alkool/chivas-regal-18.webp",
+      "alkool-disaronno": "alkool/disaronno.webp",
+      "alkool-fernet": "alkool/fernet.webp",
+      "alkool-fernet-branca": "alkool/fernet-branca.webp",
+      "alkool-gin-gordons": "alkool/gin-gordons.webp",
+      "alkool-gin-hendricks": "alkool/gin-hendricks.webp",
+      "alkool-grey-gose": "alkool/grey-gose.webp",
+      "alkool-hennessy": "alkool/hennessy.webp",
+      "alkool-irish-gin": "alkool/irish-gin.webp",
+      "alkool-j-b": "alkool/j-b.webp",
+      "alkool-jack-daniel": "alkool/jack-daniel.webp",
+      "alkool-jagermeister": "alkool/jagermeister.webp",
+      "alkool-konjak-martini": "alkool/konjak-martini.webp",
+      "alkool-konjak-renaissance": "alkool/konjak-renaissance.webp",
+      "alkool-konjak-skenderbeu": "alkool/konjak-skenderbeu.webp",
+      "alkool-limoncel": "alkool/limoncel.webp",
+      "birra-bavaria-0-alkool": "birra/bavaria-0-alkool.webp",
+      "birra-bitburger": "birra/bitburger.webp",
+      "birra-bitburger-0-alkool": "birra/bitburger-0-alkool.webp",
+      "birra-corona": "birra/corona.webp",
+      "birra-elbar": "birra/elbar.webp",
+      "birra-heineken-italian": "birra/heineken-italian.webp",
+      "birra-paulaner": "birra/paulaner.webp",
+      "birra-peja": "birra/peja.webp",
+      "birra-peroni": "birra/peroni.webp",
+      "cocktails-analkolik": "cocktails/analkolik.webp",
+      "cocktails-aperol-spritz": "cocktails/aperol-spritz.webp",
+      "cocktails-black-russian": "cocktails/black-russian.webp",
+      "cocktails-blue-laguna": "cocktails/blue-laguna.webp",
+      "cocktails-capriosca": "cocktails/capriosca.webp",
+      "cocktails-cosmopolitan": "cocktails/cosmopolitan.webp",
+      "cocktails-daquiri": "cocktails/daquiri.webp",
+      "cocktails-desperado": "cocktails/desperado.webp",
+      "cocktails-disaronno-sour": "cocktails/disaronno-sour.webp",
+      "cocktails-eleonor": "cocktails/eleonor.webp",
+      "cocktails-goodfather": "cocktails/goodfather.webp",
+      "cocktails-kokteil-me-alkool": "cocktails/kokteil-me-alkool.webp",
+      "cocktails-london-mule": "cocktails/london-mule.webp",
+      "cocktails-long-island": "cocktails/long-island.webp",
+      "cocktails-mango-love": "cocktails/mango-love.webp",
+      "cocktails-margarita": "cocktails/margarita.webp",
+      "cocktails-mojito": "cocktails/mojito.webp",
+      "cocktails-pina-colada": "cocktails/pina-colada.webp",
+      "cocktails-sex-on-the-beach": "cocktails/sex-on-the-beach.webp",
+      "cocktails-tequila-sunrise": "cocktails/tequila-sunrise.webp",
+      "cocktails-vodka-sour": "cocktails/vodka-sour.webp",
+      "lengje-te-fresketa-leng-frutash-mix": "lengje-te-fresketa/leng-frutash-mix.webp",
+      "lengje-te-fresketa-leng-jete": "lengje-te-fresketa/leng-jete.webp",
+      "lengje-te-fresketa-leng-mix-molle-karrote": "lengje-te-fresketa/leng-mix-molle-karrote.webp",
+      "lengje-te-fresketa-leng-molle": "lengje-te-fresketa/leng-molle.webp",
+      "lengje-te-fresketa-leng-portokalli": "lengje-te-fresketa/leng-portokalli.webp",
+      "lengje-te-fresketa-leng-shege": "lengje-te-fresketa/leng-shege.webp",
+      "lengje-te-fresketa-milkshake": "lengje-te-fresketa/milkshake.webp",
+      "lengje-te-fresketa-smoothie": "lengje-te-fresketa/smoothie.webp",
+      "long-drinks-bacardi-cola": "long-drinks/bacardi-cola.webp",
+      "long-drinks-chivas-cola": "long-drinks/chivas-cola.webp",
+      "long-drinks-chivas-redbull": "long-drinks/chivas-redbull.webp",
+      "long-drinks-jack-cola": "long-drinks/jack-cola.webp",
+      "long-drinks-jack-redbull": "long-drinks/jack-redbull.webp",
+      "long-drinks-jager-redbull": "long-drinks/jager-redbull.webp",
+      "long-drinks-vodka-lemon": "long-drinks/vodka-lemon.webp",
+      "long-drinks-vodka-portokall": "long-drinks/vodka-portokall.webp",
+      "long-drinks-vodka-redbull": "long-drinks/vodka-redbull.webp",
+      "long-drinks-vodka-tonic": "long-drinks/vodka-tonic.webp",
+      "pije-freskuese-amita": "pije-freskuese/amita.webp",
+      "pije-freskuese-aranciata-rosse": "pije-freskuese/aranciata-rosse.webp",
+      "pije-freskuese-b52": "pije-freskuese/b52.webp",
+      "pije-freskuese-biter": "pije-freskuese/biter.webp",
+      "pije-freskuese-coca-cola": "pije-freskuese/coca-cola.webp",
+      "pije-freskuese-crodino": "pije-freskuese/crodino.webp",
+      "pije-freskuese-fanta": "pije-freskuese/fanta.webp",
+      "pije-freskuese-golden-eagle": "pije-freskuese/golden-eagle.webp",
+      "pije-freskuese-ivi": "pije-freskuese/ivi.webp",
+      "pije-freskuese-lemon-soda": "pije-freskuese/lemon-soda.webp",
+      "pije-freskuese-nescaffe": "pije-freskuese/nescaffe.webp",
+      "pije-freskuese-orange-soda": "pije-freskuese/orange-soda.webp",
+      "pije-freskuese-red-bull": "pije-freskuese/red-bull.webp",
+      "pije-freskuese-rose-kanace": "pije-freskuese/rose-kanace.webp",
+      "pije-freskuese-rose-lemonade": "pije-freskuese/rose-lemonade.webp",
+      "pije-freskuese-bravo": "pije-freskuese/bravo.webp",
+      "pije-freskuese-cherry-tonik": "pije-freskuese/cherry-tonik.webp",
+      "pije-freskuese-lipton-ice-tea": "pije-freskuese/lipton-ice-tea.webp",
+      "pije-freskuese-schweppes": "pije-freskuese/schweppes.webp",
+      "pije-freskuese-uje-me-vitamina": "pije-freskuese/uje-me-vitamina.webp",
+      "pije-freskuese-uje-me-gaz": "pije-freskuese/uje-plastike.webp",
+      "pije-freskuese-uje-me-gaz-qelqi": "pije-freskuese/uje-qelqi.webp",
+      "pije-freskuese-uje-natyral": "pije-freskuese/uje-plastike.webp",
+      "pije-freskuese-uje-natyral-qelqi": "pije-freskuese/uje-qelqi.webp",
+      "shisha-shisha-banane": "shisha/shisha-banane.webp",
+      "shisha-shisha-boronic": "shisha/shisha-boronic.webp",
+      "shisha-shisha-cumcakiz": "shisha/shisha-cumcakiz.webp",
+      "shisha-shisha-dardh": "shisha/shisha-dardh.webp",
+      "shisha-shisha-frozenbluebarry": "shisha/shisha-frozenbluebarry.webp",
+      "shisha-shisha-frutpasion": "shisha/shisha-frutpasion.webp",
+      "shisha-shisha-hi-tech": "shisha/shisha-hi-tech.webp",
+      "shisha-shisha-limon": "shisha/shisha-limon.webp",
+      "shisha-shisha-mango": "shisha/shisha-mango.webp",
+      "shisha-shisha-rrushmente": "shisha/shisha-rrushmente.webp",
+      "shisha-shisha-shalqi": "shisha/shisha-shalqi.webp",
+      "snacks-akullore-kupe": "snacks/snacks-akullore-kupe.webp",
+      "snacks-akullore-pistachio": "snacks/snacks-akullore-pistachio.webp",
+      "snacks-antipaste-e-ftohte-e-madhe": "snacks/snacks-antipaste-e-ftohte-e-madhe.webp",
+      "snacks-antipaste-e-ftohte-e-vogel": "snacks/snacks-antipaste-e-ftohte-e-vogel.webp",
+      "snacks-briosh": "snacks/snacks-briosh.webp",
+      "snacks-fruta": "snacks/snacks-fruta.webp",
+      "snacks-tost": "snacks/snacks-tost.webp",
+      "te-ngrohta-bacardi-coffe": "te-ngrohta/bacardi-coffe.webp",
+      "te-ngrohta-caf-mio": "te-ngrohta/cafe-mio.webp",
+      "te-ngrohta-caffe-giseng": "te-ngrohta/caffe-giseng.webp",
+      "te-ngrohta-caj-bio": "te-ngrohta/caj-bio.webp",
+      "te-ngrohta-caj-i-ngrohte": "te-ngrohta/caj-i-ngrohte.webp",
+      "te-ngrohta-chocolate-dubai": "te-ngrohta/chocolate-dubai.webp",
+      "te-ngrohta-coko-fredo": "te-ngrohta/coko-fredo.webp",
+      "te-ngrohta-cokollate-e-nxehte": "te-ngrohta/cokollate-e-nxehte.webp",
+      "te-ngrohta-cream-coffee": "te-ngrohta/cream-coffee.webp",
+      "te-ngrohta-decaffeinato": "te-ngrohta/decaffeinato.webp",
+      "te-ngrohta-esspreso-fredo": "te-ngrohta/esspreso-fredo.webp",
+      "te-ngrohta-frape": "te-ngrohta/frape.webp",
+      "te-ngrohta-freddoccino": "te-ngrohta/freddoccino.webp",
+      "te-ngrohta-kafe": "te-ngrohta/kafe.webp",
+      "te-ngrohta-kafe-amerikane": "te-ngrohta/kafe-amerikane.webp",
+      "te-ngrohta-kafe-gjysem": "te-ngrohta/kafe-gjysem.webp",
+      "te-ngrohta-kafe-latte": "te-ngrohta/kafe-latte.webp",
+      "te-ngrohta-kafe-madhe": "te-ngrohta/kafe-madhe.webp",
+      "te-ngrohta-kakao": "te-ngrohta/kakao.webp",
+      "te-ngrohta-kakao-e-ftohte": "te-ngrohta/kakao-e-ftohte.webp",
+      "te-ngrohta-kakao-e-vogel": "te-ngrohta/kakao-e-vogel.webp",
+      "te-ngrohta-kapucino-bustine": "te-ngrohta/kapucino-bustine.webp",
+      "te-ngrohta-kapucino-me-kafe": "te-ngrohta/kapucino-me-kafe.webp",
+      "te-ngrohta-korreto": "te-ngrohta/korreto.webp",
+      "te-ngrohta-makiato": "te-ngrohta/makiato.webp",
+      "te-ngrohta-makiato-fredo": "te-ngrohta/makiato-fredo.webp",
+      "te-ngrohta-makiato-madhe": "te-ngrohta/makiato-madhe.webp",
+      "te-ngrohta-marocchino": "te-ngrohta/marocchino.webp",
+      "te-ngrohta-marocchino-e-ftohte": "te-ngrohta/marocchino-e-ftohte.webp",
+      "te-ngrohta-matcha-late": "te-ngrohta/matcha-late.webp",
+      "te-ngrohta-qumesht": "te-ngrohta/te-ngrohta-qumesht.webp",
+      "te-ngrohta-salep": "te-ngrohta/te-ngrohta-salep.webp",
+      "vere-chardonnay": "vere/vere-chardonnay.webp",
+      "vere-chianti": "vere/vere-chianti.webp",
+      "vere-donnaluce": "vere/vere-donnaluce.webp",
+      "vere-gote-vere-e-bardhe": "vere/vere-gote-vere-e-bardhe.webp",
+      "vere-gote-vere-e-kuqe": "vere/vere-gote-vere-e-kuqe.webp",
+      "vere-goverano": "vere/vere-goverano.webp",
+      "vere-juli": "vere/vere-juli.webp",
+      "vere-montepuciano": "vere/vere-montepuciano.webp",
+      "vere-papale": "vere/vere-papale.webp",
+      "vere-pinot-grigo": "vere/vere-pinot-grigo.webp",
+      "vere-pinot-rose": "vere/vere-pinot-rose.webp",
+      "vere-primitivo-12-mezzo": "vere/vere-primitivo-12-mezzo.webp",
+      "vere-primitivo-zimfodel": "vere/vere-primitivo-zimfodel.webp",
+      "vere-toscano": "vere/vere-toscano.webp",
+      "vere-vere-chardonnay-puglia-e-bardhe": "vere/vere-vere-chardonnay-puglia-e-bardhe.webp"
+    
+    
+};
+
+    const menuRoot = document.getElementById("menuRoot");
+    const categoryTrack = document.getElementById("categoryTrack");
+    const searchInput = document.getElementById("searchInput");
+    const clearSearch = document.getElementById("clearSearch");
+    const noResults = document.getElementById("noResults");
+    const statusLine = document.getElementById("statusLine");
+    const backTop = document.getElementById("backTop");
+    const imageModal = document.getElementById("imageModal");
+    const modalImage = document.getElementById("modalImage");
+    const modalName = document.getElementById("modalName");
+    const modalPrice = document.getElementById("modalPrice");
+    const modalClose = document.getElementById("modalClose");
+
+    const sectionObservers = new Map();
+
+    function escapeHTML(value) {
+      return String(value).replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+      }[char]));
+    }
+
+    function normalizeText(value) {
+      return String(value)
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/ë/g, "e")
+        .replace(/ç/g, "c");
+    }
+
+    function slug(value) {
+      return normalizeText(value).replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+    }
+
+    function imageUrl(item) {
+      if (CUSTOM_IMAGES[item.id]) return CUSTOM_IMAGES[item.id];
+      const placeholderMap = {
+        "Alkool": "alkool/_placeholder.webp",
+        "Birra": "birra/_placeholder.webp",
+        "Cocktails": "cocktails/_placeholder.webp",
+        "Lëngje të Freskëta": "lengje-te-fresketa/_placeholder.webp",
+        "Long Drinks": "long-drinks/_placeholder.webp",
+        "Pije Freskuese": "pije-freskuese/_placeholder.webp",
+        "Të Ngrohta": "te-ngrohta/_placeholder.webp",
+        "Verë": "vere/_placeholder.webp",
+        "Snacks": "snacks/_placeholder.webp",
+        "Shisha": "shisha/_placeholder.webp"
+      };
+      return placeholderMap[item.category] || "placeholders/menu.webp";
+    }
+
+    function groupedItems(items) {
+      return CATEGORIES.map(category => ({
+        category,
+        items: items.filter(item => item.category === category)
+      })).filter(group => group.items.length);
+    }
+
+    function createCategoryNav() {
+      categoryTrack.innerHTML = CATEGORIES.map((category, index) => `
+        <button class="category-btn ${index === 0 ? "is-active" : ""}" type="button" data-category="${escapeHTML(category)}" data-target="${slug(category)}">
+          ${escapeHTML(category)}
+        </button>
+      `).join("");
+
+      categoryTrack.addEventListener("click", event => {
+        const button = event.target.closest(".category-btn");
+        if (!button) return;
+        const target = document.getElementById(`section-${button.dataset.target}`);
+        if (!target) return;
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    }
+
+    function renderMenu(items, query = "") {
+      menuRoot.innerHTML = "";
+      const groups = groupedItems(items);
+
+      groups.forEach(group => {
+        const section = document.createElement("section");
+        section.className = "menu-section";
+        section.id = `section-${slug(group.category)}`;
+        section.dataset.category = group.category;
+
+        section.innerHTML = `
+          <div class="section-head">
+            <h2 class="section-title">${escapeHTML(group.category)}</h2>
+            <div class="section-rule"></div>
+            <span class="section-count">${group.items.length}</span>
+          </div>
+          <div class="cards">
+            ${group.items.map(item => `
+              <article class="menu-card" data-name="${escapeHTML(item.name)}" data-category="${escapeHTML(item.category)}" data-price="${escapeHTML(item.price)}" data-image="${imageUrl(item)}">
+                <div class="photo">
+                  <img src="${imageUrl(item)}" loading="lazy" alt="${escapeHTML(item.name)} - ${escapeHTML(item.category)}">
+                </div>
+                <div class="card-info">
+                  <div>
+                    <h3 class="item-name">${escapeHTML(item.name)}</h3>
+                    <div class="item-cat">${escapeHTML(item.category)}</div>
+                  </div>
+                  <div class="price-row">
+                    <span class="mini-line"></span>
+                    <strong class="price">${escapeHTML(item.price)}</strong>
+                  </div>
+                </div>
+              </article>
+            `).join("")}
+          </div>
+        `;
+
+        menuRoot.appendChild(section);
+      });
+
+      const hasResults = items.length > 0;
+      noResults.style.display = hasResults ? "none" : "block";
+
+      if (query.trim()) {
+        statusLine.textContent = hasResults
+          ? `${items.length} produkte u gjetën për "${query.trim()}".`
+          : "";
+      } else {
+        statusLine.textContent = `${MENU_ITEMS.length} produkte në menu.`;
+      }
+
+      observeCards();
+      observeSections();
+    }
+
+    function observeCards() {
+      const cards = document.querySelectorAll(".menu-card");
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.16, rootMargin: "0px 0px -32px 0px" });
+
+      cards.forEach(card => observer.observe(card));
+    }
+
+    function observeSections() {
+      sectionObservers.forEach(observer => observer.disconnect());
+      sectionObservers.clear();
+
+      const sectionObserver = new IntersectionObserver(entries => {
+        const visible = entries
+          .filter(entry => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+        if (!visible) return;
+
+        const category = visible.target.dataset.category;
+        document.querySelectorAll(".category-btn").forEach(button => {
+          const isActive = button.dataset.category === category;
+          button.classList.toggle("is-active", isActive);
+          if (isActive) {
+            const targetLeft = button.offsetLeft - (categoryTrack.clientWidth / 2) + (button.offsetWidth / 2);
+            categoryTrack.scrollTo({ left: Math.max(0, targetLeft), behavior: "smooth" });
+          }
+        });
+      }, {
+        threshold: [0.15, 0.35, 0.55],
+        rootMargin: "-138px 0px -50% 0px"
+      });
+
+      document.querySelectorAll(".menu-section").forEach(section => sectionObserver.observe(section));
+      sectionObservers.set("sections", sectionObserver);
+    }
+
+    function handleSearch() {
+      const query = searchInput.value;
+      const normalizedQuery = normalizeText(query).trim();
+
+      clearSearch.classList.toggle("is-visible", normalizedQuery.length > 0);
+
+      if (!normalizedQuery) {
+        renderMenu(MENU_ITEMS, "");
+        return;
+      }
+
+      const filtered = MENU_ITEMS.filter(item => {
+        const haystack = normalizeText(`${item.name} ${item.category} ${item.price}`);
+        return haystack.includes(normalizedQuery);
+      });
+
+      renderMenu(filtered, query);
+    }
+
+    function openModal(card) {
+      modalImage.src = card.dataset.image;
+      modalImage.alt = card.dataset.name;
+      modalName.textContent = card.dataset.name;
+      modalPrice.textContent = card.dataset.price;
+      imageModal.classList.add("is-open");
+      imageModal.setAttribute("aria-hidden", "false");
+    }
+
+    function closeModal() {
+      imageModal.classList.remove("is-open");
+      imageModal.setAttribute("aria-hidden", "true");
+      modalImage.src = "";
+    }
+
+    searchInput.addEventListener("input", handleSearch);
+
+    clearSearch.addEventListener("click", () => {
+      searchInput.value = "";
+      searchInput.focus();
+      handleSearch();
+    });
+
+    menuRoot.addEventListener("click", event => {
+      const image = event.target.closest(".photo img");
+      if (!image) return;
+      const card = event.target.closest(".menu-card");
+      if (card) openModal(card);
+    });
+
+    modalClose.addEventListener("click", closeModal);
+    imageModal.addEventListener("click", event => {
+      if (event.target === imageModal) closeModal();
+    });
+
+    window.addEventListener("keydown", event => {
+      if (event.key === "Escape") closeModal();
+    });
+
+    window.addEventListener("scroll", () => {
+      backTop.classList.toggle("is-visible", window.scrollY > 520);
+    }, { passive: true });
+
+    backTop.addEventListener("click", () => {
+      document.getElementById("top").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    createCategoryNav();
+    renderMenu(MENU_ITEMS);
+  </script>
+</body>
+</html>
